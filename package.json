@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "react": "^16.1.0",
-    "react-dom": "^16.1.0",
+    "react-dom": "^16.1.1",
     "react-scripts": "1.0.17"
   },
   "scripts": {
@@ -12,5 +12,12 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-enzyme": "^0.8.0",
+    "enzyme": "~>2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^16.1.1"
   }
 }
