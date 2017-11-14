@@ -1,1 +1,5 @@
-export default {}
+import groups from './groups'
+
+export default {
+  groups
+}

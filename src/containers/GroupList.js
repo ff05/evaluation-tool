@@ -5,7 +5,7 @@ import fetchGroups from '../actions/groups/fetch'
 
 class GroupList extends PureComponent {
   componentWillMount() {
-    console.log(this.props.fetchGroups())
+    this.props.fetchGroups()
   }
 
   render() {
