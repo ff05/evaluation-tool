@@ -7,12 +7,12 @@ import AppBar from 'material-ui/AppBar'
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <MuiThemeProvider muiTheme={muiTheme}>
-          <AppBar />
-          <Routes />
-        </MuiThemeProvider>
-      </div>
+      <MuiThemeProvider muiTheme={muiTheme}>
+        <div className="App">
+            <AppBar />
+            <Routes />
+        </div>
+      </MuiThemeProvider>
     );
   }
 }
