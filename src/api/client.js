@@ -79,4 +79,8 @@ export default class ApiClient {
   storeToken(token) {
     localStorage.setItem(this.options.tokenStorageKey, token)
   }
+
+  removeToken() {
+    localStorage.removeItem(this.options.tokenStorageKey)
+  }
 }
