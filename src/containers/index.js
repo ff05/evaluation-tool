@@ -4,7 +4,7 @@ import Student from './Student'
 import SignUp from './SignUp'
 import SignIn from './SignIn'
 
-export default {
+export {
   GroupList,
   Group,
   Student,
