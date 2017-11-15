@@ -2,11 +2,9 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { authenticate } from '../actions/authenticate'
-import Group from './Group'
 import fetchGroups from '../actions/groups/fetch'
 import RaisedButton from 'material-ui/RaisedButton'
 import Paper from 'material-ui/Paper'
-import List from 'material-ui/List'
 import AddIcon from 'material-ui/svg-icons/social/people'
 import styling from './GroupList.css'
 
@@ -21,7 +19,7 @@ class GroupList extends PureComponent {
   showGroups = (group, index) => {
     return (
 
-       <li className="group" onClick={this.goToGroup(group._id)}>
+       <li key={index} className="group" onClick={this.goToGroup(group._id)}>
          <span>{group.batch}</span>
          <span>{group.startDate}</span>
          <span>{group.endDate}</span>
@@ -55,6 +53,11 @@ class GroupList extends PureComponent {
     )
   }
 }
-const mapStateToProps = ({ groups }) => ({ groups })
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups,
+    students: state.students
+  }
+}
 
 export default connect(mapStateToProps, { authenticate, fetchGroups, push })(GroupList)

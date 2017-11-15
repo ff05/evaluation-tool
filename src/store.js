@@ -5,6 +5,7 @@ import createHistory from 'history/createBrowserHistory'
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 
 import reducers from './reducers'
+
 const reducer = combineReducers({
   ...reducers,
   router: routerReducer

@@ -1,6 +1,6 @@
-import students from './groups'
+import students from './students'
 import groups from './groups'
-import currentUser from './groups'
+import currentUser from './currentUser'
 
 export default {
   students,
