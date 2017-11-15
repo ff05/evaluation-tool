@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { authenticate } from '../actions/authenticate'
 import Group from './Group'
 import fetchGroups from '../actions/groups/fetch'
 
 class GroupList extends PureComponent {
   componentWillMount() {
+    this.props.authenticate()
     this.props.fetchGroups()
   }
 
@@ -24,4 +26,4 @@ class GroupList extends PureComponent {
 }
 const mapStateToProps = ({ groups }) => ({ groups })
 
-export default connect(mapStateToProps, { fetchGroups })(GroupList)
+export default connect(mapStateToProps, { authenticate, fetchGroups })(GroupList)
