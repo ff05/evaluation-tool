@@ -8,9 +8,17 @@ class GroupList extends PureComponent {
     this.props.fetchGroups()
   }
 
+  showGroups(group) {
+    return <Group group={group}/>
+  }
+
   render() {
+    const { groups } = this.props
+
     return (
-      <Group />
+      <div className="GroupList">
+        {groups.map(group => (this.showGroups(group)))}
+      </div>
     )
   }
 }
