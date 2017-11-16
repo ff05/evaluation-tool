@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { authenticate } from '../actions/authenticate'
 import { push } from 'react-router-redux'
+import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -13,6 +14,30 @@ import { fetchOneGroup } from '../actions/groups/fetch'
 import styles from './Group.css'
 
 class Group extends PureComponent {
+  static propTypes = {
+    fetchGroups: PropTypes.func.isRequired,
+    fetchStudents: PropTypes.func.isRequired,
+    authenticate: PropTypes.func.isRequired,
+    push: PropTypes.func.isRequired,
+    addStudent: PropTypes.func.isRequired,
+    fetchOneGroup: PropTypes.func.isRequired,
+
+    groups: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      batch: PropTypes.number.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string.isRequired,
+    })),
+
+    students: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+      group: PropTypes.number.isRequired,
+      days: PropTypes.array
+    })),
+  }
+
   componentWillMount() {
     const { authenticate, fetchOneGroup, fetchStudents, fetchGroups } = this.props
 

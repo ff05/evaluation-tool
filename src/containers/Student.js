@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { authenticate } from '../actions/authenticate'
+import PropTypes from 'prop-types'
 import { fetchOneStudent } from '../actions/students/fetch'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
@@ -9,6 +10,20 @@ import RaisedButton from 'material-ui/RaisedButton'
 import styling from './Student.css'
 
 class Student extends PureComponent {
+    static propTypes = {
+      authenticate: PropTypes.func.isRequired,
+      fetchOneStudent: PropTypes.func.isRequired,
+
+      students: PropTypes.arrayOf(PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        picture: PropTypes.string.isRequired,
+        group: PropTypes.number.isRequired,
+        days: PropTypes.array
+      })),
+
+      match: PropTypes.object
+    }
   componentWillMount() {
     const { authenticate, fetchOneStudent } = this.props
 
