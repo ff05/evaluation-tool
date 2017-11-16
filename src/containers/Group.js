@@ -3,31 +3,37 @@ import { connect } from 'react-redux'
 import { authenticate } from '../actions/authenticate'
 import Paper from 'material-ui/Paper'
 import fetchStudents from '../actions/students/fetch'
-import Student from './Student'
+import { fetchOneGroup } from '../actions/groups/fetch'
 import styles from './Group.css'
 
 class Group extends PureComponent {
   componentWillMount() {
-    const { pathname } = this.props.location
-    const groupId = pathname.slice(pathname.lastIndexOf("/") + 1)
+    // const { pathname } = this.props.location
+    // const { groups } = this.props
+    // const groupId = pathname.slice(pathname.lastIndexOf("/") + 1)
+    // const currentGroup = groups.filter(group => group._id === groupId)
+    // const batchNr = currentGroup[0].batch
+    const { group, students, authenticate, fetchOneGroup, fetchStudents } = this.props
 
-    this.props.authenticate()
-    this.props.fetchStudents(groupId)
+    const { groupId } = this.props.match.params
+
+    if (!group) { fetchOneGroup(groupId) }
+    if (students.length === 0) fetchStudents()
   }
 
   showStudents = (student, index) => {
     return (
-       <Paper key={index} className="student">
+       <div key={index} className="student">
          <h3>{student.name}</h3>
          <img className="picture" src={student.picture} alt={student.name}/>
-      </Paper>
+      </div>
     )
   }
 
 
   render() {
-
-    const {students} = this.props
+    const { students } = this.props
+    if (!students) return null
     return (
       <div className="Group">
       <h1>Class</h1>
@@ -40,10 +46,13 @@ class Group extends PureComponent {
 }
 
 const mapStateToProps = (state) => {
+  const { groups, students } = state
+  const group = groups.filter((g) => (g._id === this.props.match.params.groupId))[0]
   return {
-    groups: state.groups,
-    students: state.students
+    groups,
+    group,
+    students
   }
 }
 
-export default connect(mapStateToProps,{authenticate, fetchStudents})(Group)
+export default connect(mapStateToProps,{authenticate, fetchStudents, fetchOneGroup})(Group)

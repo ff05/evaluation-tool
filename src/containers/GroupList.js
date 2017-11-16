@@ -10,8 +10,11 @@ import styling from './GroupList.css'
 
 class GroupList extends PureComponent {
   componentWillMount() {
-    this.props.authenticate()
-    this.props.fetchGroups()
+    const { groups, authenticate, fetchGroups } = this.props
+    authenticate()
+    fetchGroups()
+
+    if (!groups) fetchGroups()
   }
 
   goToGroup = groupId => event => this.props.push(`/groups/${groupId}`)
@@ -27,8 +30,17 @@ class GroupList extends PureComponent {
     )
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { groups } = nextProps
+
+    if (!groups) {
+      this.props.fetchGroups()
+    }
+  }
+
   render() {
     const { groups } = this.props
+    if (!groups) return null
 
     return (
       <div className="GroupList">
