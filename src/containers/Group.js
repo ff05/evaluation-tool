@@ -48,6 +48,10 @@ export class Group extends PureComponent {
     fetchOneGroup(groupId)
 
     fetchStudents(groupId)
+    this.state = {
+      ask : false,
+      name: ""
+    }
   }
 
   goToStudent = (studentId) => event => this.props.push(`/students/${studentId}`)
@@ -87,6 +91,22 @@ export class Group extends PureComponent {
     this.props.addStudent(groupId, newStudent);
   }
 
+  askQuestion() {
+    const { students } = this.props
+    const reds = students.filter(s => s.days[0].eval === "red")
+    const oranges = students.filter(s => s.days[0].eval === "orange")
+    const greens = students.filter(s => s.days[0].eval === "green")
+    const allColors1 = [reds, reds, reds, oranges, oranges, greens]
+    return [].concat(...allColors1)
+  }
+
+  getRandom() {
+    const allColors = this.askQuestion()
+    const randStu = (allColors[Math.floor(Math.random()*allColors.length)])
+    this.setState({ask: true,
+    name: randStu.name})
+  }
+
   showPercentage() {
     const { students } = this.props
     const days = students.map(s => s.days)
@@ -102,6 +122,14 @@ export class Group extends PureComponent {
         <div className="green" style={{width: perc("green")}}> </div>
         <div className="orange" style={{width: perc("orange")}}></div>
         <div className="red" style={{width: perc("red")}}></div>
+        <div className="lower">
+          <RaisedButton
+          onClick={ this.getRandom.bind(this) }
+            label= "ask random"
+            primary={true}
+          />
+          { this.state.ask ? <h3 className="rand-name">{this.state.name}</h3>: null }
+        </div>
       </div>
     )
   }
