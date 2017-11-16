@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField'
 import AddIcon from 'material-ui/svg-icons/social/people'
 import styling from './GroupList.css'
 
-class GroupList extends PureComponent {
+export class GroupList extends PureComponent {
   componentWillMount() {
     const { groups, authenticate, fetchGroups } = this.props
     authenticate()
