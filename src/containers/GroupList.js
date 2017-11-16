@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { authenticate } from '../actions/authenticate'
+import PropTypes from 'prop-types'
 import fetchGroups from '../actions/groups/fetch'
 import addGroup from '../actions/groups/add'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -10,7 +11,28 @@ import TextField from 'material-ui/TextField'
 import AddIcon from 'material-ui/svg-icons/social/people'
 import styling from './GroupList.css'
 
-class GroupList extends PureComponent {
+export class GroupList extends PureComponent {
+  static propTypes = {
+    fetchGroups: PropTypes.func.isRequired,
+    addGroup: PropTypes.func.isRequired,
+    authenticate: PropTypes.func.isRequired,
+
+    groups: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      batch: PropTypes.string.isRequired,
+      startDate: PropTypes.string.isRequired,
+      endDate: PropTypes.string.isRequired,
+    })),
+
+    students: PropTypes.arrayOf(PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+      group: PropTypes.string.isRequired,
+      days: PropTypes.array
+    })),
+  }
+
   componentWillMount() {
     const { groups, authenticate, fetchGroups } = this.props
     authenticate()
