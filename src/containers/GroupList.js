@@ -17,12 +17,12 @@ class GroupList extends PureComponent {
     if (!groups) fetchGroups()
   }
 
-  goToGroup = groupId => event => this.props.push(`/groups/${groupId}`)
+  goToGroup = groupBatch => event => this.props.push(`/groups/${groupBatch}`)
 
   showGroups = (group, index) => {
     return (
 
-       <li key={index} className="group" onClick={this.goToGroup(group._id)}>
+       <li key={index} className="group" onClick={this.goToGroup(group.batch)}>
          <span>{group.batch}</span>
          <span>{group.startDate}</span>
          <span>{group.endDate}</span>

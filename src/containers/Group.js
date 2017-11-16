@@ -8,15 +8,11 @@ import styles from './Group.css'
 
 class Group extends PureComponent {
   componentWillMount() {
-    // const { pathname } = this.props.location
-    // const { groups } = this.props
-    // const groupId = pathname.slice(pathname.lastIndexOf("/") + 1)
-    // const currentGroup = groups.filter(group => group._id === groupId)
-    // const batchNr = currentGroup[0].batch
     const { group, students, authenticate, fetchOneGroup, fetchStudents } = this.props
 
     const { groupId } = this.props.match.params
 
+    authenticate()
     if (!group) { fetchOneGroup(groupId) }
     if (students.length === 0) fetchStudents()
   }
@@ -45,9 +41,8 @@ class Group extends PureComponent {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { groups, students } = state
-  const group = groups.filter((g) => (g._id === this.props.match.params.groupId))[0]
+const mapStateToProps = ({groups, students}, {match}) => {
+  const group = groups.filter((g) => (g.batch === match.params.groupId))[0]
   return {
     groups,
     group,
