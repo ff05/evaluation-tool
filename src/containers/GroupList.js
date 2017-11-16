@@ -65,11 +65,6 @@ class GroupList extends PureComponent {
     )
   }
 }
-const mapStateToProps = (state) => {
-  return {
-    groups: state.groups,
-    students: state.students
-  }
-}
+const mapStateToProps = ({groups, students}) => ({groups, students})
 
 export default connect(mapStateToProps, { authenticate, fetchGroups, push })(GroupList)

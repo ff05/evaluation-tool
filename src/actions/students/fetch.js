@@ -4,11 +4,11 @@ export const FETCHED_STUDENTS = 'FETCHED_STUDENTS'
 
 const api = new ApiClient()
 
-export default () => {
+export default (group) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.get('/students')
+    api.get(`/groups/${group}/students`)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })

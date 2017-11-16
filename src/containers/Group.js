@@ -14,7 +14,7 @@ class Group extends PureComponent {
 
     authenticate()
     if (!group) { fetchOneGroup(groupId) }
-    if (students.length === 0) fetchStudents()
+    if (students.length === 0) fetchStudents(groupId)
   }
 
   showStudents = (student, index) => {

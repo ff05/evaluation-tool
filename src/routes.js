@@ -10,7 +10,7 @@ export default class Routes extends Component {
         <Route exact path="/" component={GroupList} />
         <Route path="/groups/:groupId" component={Group} />
         <Route path="/create-group" component={GroupCreator} />
-        <Route path="/groups/:groupId/student/:studentId" component={Student} />
+        <Route path="/groups/:groupId/students/:studentId" component={Student} />
         <Route path="/sign-up" component={SignUp} />
         <Route path="/sign-in" component={SignIn} />
       </div>
