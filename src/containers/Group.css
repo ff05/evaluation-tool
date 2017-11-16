@@ -4,6 +4,54 @@
   width: 80%;
 }
 
+.Group h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
+.Group h1 {
+  text-align: center;
+}
+
+.Group .upper {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.Group .form {
+  width: 40%;
+  border: 1px #00AA86 solid;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.Group .input > div {
+  width: 100%!important;
+}
+
+.Group .avgScore {
+  width: 60%;
+  height: 50px;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+
+.Group .avgScore div {
+  float: left;
+  height: 100%;
+}
+
+.Group .green {
+  background-color: #4CAF50;
+}
+
+.Group .orange {
+  background-color: #FF5722;
+}
+
+.Group .red {
+  background-color: #F44336;
+}
+
 .Group .paper {
   margin-top: 40px;
   padding: 10px;
@@ -30,4 +78,9 @@
 .Group .picture {
   width: 80%;
   border-radius: 50%;
+}
+
+.Group .color {
+  width: 100%;
+  height: 30px;
 }

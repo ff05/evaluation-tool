@@ -34,9 +34,6 @@ class Student extends PureComponent {
   }
 
   showDays = (day, index) => {
-    const red = "#F44336"
-    const orange = "#FF5722"
-    const green = "#4CAF50"
     const showColor = (color) => {
       if (color === "red") return "#F44336"
       if (color === "orange") return "#FF5722"
