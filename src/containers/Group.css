@@ -18,6 +18,13 @@
   width: 200px;
   height: 250px;
   text-align: center;
+  background: inherit;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.Group .student:hover {
+  background: #E0F2F1;
 }
 
 .Group .picture {

@@ -2,10 +2,25 @@
   padding: 20px;
   margin: 20px auto;
   width: 80%;
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
+.GroupList h1 {
+  width: 100%;
+}
+
+.GroupList .form {
+  width: 40%;
+}
+
+.GroupList .input > div {
+  max-width: 100%!important;
 }
 
 .GroupList .paper {
-  margin-top: 40px;
+  width: 60%;
   padding: 10px;
   text-align: left;
 }
