@@ -1,0 +1,33 @@
+.Group {
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.Group .paper {
+  margin-top: 40px;
+  padding: 10px;
+  text-align: left;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.Group .student {
+  width: 200px;
+  height: 250px;
+  text-align: center;
+  background: inherit;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.Group .student:hover {
+  background: #E0F2F1;
+}
+
+.Group .picture {
+  width: 80%;
+  border-radius: 50%;
+}

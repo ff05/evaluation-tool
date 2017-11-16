@@ -1,21 +1,21 @@
 import ApiClient from '../../api/client'
 import { APP_LOADING, APP_DONE_LOADING, LOAD_ERROR, LOAD_SUCCESS } from '../loading'
-export const FETCHED_GROUPS = 'FETCHED_GROUPS'
-export const FETCHED_ONE_GROUP = 'FETCHED_ONE_GROUP'
+export const FETCHED_STUDENTS = 'FETCHED_STUDENTS'
+export const FETCHED_ONE_STUDENT = 'FETCHED_ONE_STUDENT'
 
 const api = new ApiClient()
 
-export default () => {
+export default (group) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.get('/groups')
+    api.get(`/groups/${group}/students`)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
         dispatch({
-          type: FETCHED_GROUPS,
+          type: FETCHED_STUDENTS,
           payload: result.body
         })
       })
@@ -29,17 +29,17 @@ export default () => {
   }
 }
 
-export const fetchOneGroup = (groupId) => {
+export const fetchOneStudent = (studentId) => {
   return dispatch => {
     dispatch({ type: APP_LOADING })
 
-    api.get(`/groups/${groupId}`)
+    api.get(`/students/${studentId}`)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
         dispatch({
-          type: FETCHED_ONE_GROUP,
+          type: FETCHED_ONE_STUDENT,
           payload: result.body
         })
       })

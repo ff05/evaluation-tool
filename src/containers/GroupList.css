@@ -1,0 +1,51 @@
+.GroupList {
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+  display: flex;
+  flex-flow: row wrap;
+
+}
+
+.GroupList h1 {
+  width: 100%;
+}
+
+.GroupList .form {
+  width: 40%;
+}
+
+.GroupList .input > div {
+  max-width: 100%!important;
+}
+
+.GroupList .paper {
+  width: 60%;
+  padding: 10px;
+  text-align: left;
+}
+
+.GroupList .groups {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.GroupList .group {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: space-between;
+  background: inherit;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: .3s ease;
+}
+
+.GroupList .group:hover {
+  background: #FFF8E1;
+}
+
+.GroupList .group-header {
+  font-weight: bold;
+  margin-bottom: 30px;
+}

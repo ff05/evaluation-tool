@@ -1,0 +1,35 @@
+.Student {
+  padding: 20px;
+  margin: 20px auto;
+  width: 80%;
+}
+
+.Student .paper {
+  display: flex;
+  padding: 50px;
+  flex-flow: row wrap;
+}
+
+.Student img {
+  width: 100px;
+  height: 100px;
+}
+
+.Student .heading {
+  padding-left: 50px;
+}
+
+.Student h3 {
+  margin: 0;
+}
+
+.Student h4 {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.Student .dayColor {
+  height: 30px;
+  width: 30px;
+  float: left;
+}
