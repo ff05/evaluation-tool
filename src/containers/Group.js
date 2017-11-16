@@ -13,14 +13,14 @@ import addStudent from '../actions/students/add'
 import { fetchOneGroup } from '../actions/groups/fetch'
 import styles from './Group.css'
 
-class Group extends PureComponent {
+export class Group extends PureComponent {
   static propTypes = {
-    fetchGroups: PropTypes.func.isRequired,
-    fetchStudents: PropTypes.func.isRequired,
-    authenticate: PropTypes.func.isRequired,
-    push: PropTypes.func.isRequired,
-    addStudent: PropTypes.func.isRequired,
-    fetchOneGroup: PropTypes.func.isRequired,
+    fetchGroups: PropTypes.func,
+    fetchStudents: PropTypes.func,
+    authenticate: PropTypes.func,
+    push: PropTypes.func,
+    addStudent: PropTypes.func,
+    fetchOneGroup: PropTypes.func,
 
     groups: PropTypes.arrayOf(PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -38,12 +38,12 @@ class Group extends PureComponent {
     })),
   }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     const { authenticate, fetchOneGroup, fetchStudents, fetchGroups } = this.props
 
     const { groupId } = this.props.match.params
 
-    authenticate()
     fetchGroups()
     fetchOneGroup(groupId)
 
@@ -53,10 +53,17 @@ class Group extends PureComponent {
   goToStudent = (studentId) => event => this.props.push(`/students/${studentId}`)
 
   showStudents = (student, index) => {
+    const showColor = (color) => {
+      if (color === "red") return "#F44336"
+      if (color === "orange") return "#FF5722"
+      if (color === "green") return "#4CAF50"
+      else return "transparent"
+    }
     return (
        <div key={index} className="student" onClick={this.goToStudent(student._id)}>
          <h3>{student.name}</h3>
          <img className="picture" src={student.picture} alt={student.name}/>
+         <div className="color" style={{background:showColor(student.days[0].eval)}}></div>
       </div>
     )
   }
@@ -80,6 +87,25 @@ class Group extends PureComponent {
     this.props.addStudent(groupId, newStudent);
   }
 
+  showPercentage() {
+    const { students } = this.props
+    const days = students.map(s => s.days)
+    const colors1 = days.map(d => d.map(e => e.eval))
+    const colors2 = [].concat(...colors1)
+    const perc = (color) => {
+      const occ = colors2.filter(c => c === color).length
+      return ( occ / colors2.length * 100 ) + "%"
+    }
+    return (
+      <div className="avgScore">
+        <h3>Average Score: </h3>
+        <div className="green" style={{width: perc("green")}}> </div>
+        <div className="orange" style={{width: perc("orange")}}></div>
+        <div className="red" style={{width: perc("red")}}></div>
+      </div>
+    )
+  }
+
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)} className="form">
@@ -98,28 +124,34 @@ class Group extends PureComponent {
   }
 
   render() {
-    const { students } = this.props
+    const { students, groups } = this.props
     if (!students) return null
-
+    if (!groups) return null
     return (
       <div className="Group">
         <h1>Students</h1>
-        {this.renderForm()}
+        <div className="upper">
+          {this.renderForm()}
+          {this.showPercentage()}
+        </div>
+
         <Paper className="paper">
             {students.map(this.showStudents)}
         </Paper>
       </div>
     )
   }
+
 }
 
 const mapStateToProps = ({groups, students}, {match}) => {
   const group = groups.filter((g) => (g.batch == match.params.groupId))[0]
-  return {
+  if (students[0] && groups[0]) return {
     groups,
     group,
     students
   }
+  return {}
 }
 
 export default connect(mapStateToProps,{authenticate, fetchGroups, addStudent, fetchStudents, fetchOneGroup, push})(Group)
