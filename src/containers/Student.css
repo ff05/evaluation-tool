@@ -5,8 +5,11 @@
 }
 
 .Student .paper {
-  display: flex;
   padding: 50px;
+}
+
+.Student .upper, .Student .lower {
+  display: flex;
   flex-flow: row wrap;
 }
 
@@ -32,4 +35,34 @@
   height: 30px;
   width: 30px;
   float: left;
+}
+
+.Student .lower p {
+  width: 100%;
+}
+
+.Student .green {
+  background-color: #4CAF50;
+  height: 30px;
+  width: 30px;
+}
+
+.Student .orange {
+  background-color: #FF5722;
+  height: 30px;
+  width: 30px;
+}
+
+.Student .red {
+  background-color: #F44336;
+  height: 30px;
+  width: 30px;
+}
+
+.Student .form {
+  padding-left: 50px;
+}
+
+.Student .form textarea {
+  margin-top: 0!important;
 }
