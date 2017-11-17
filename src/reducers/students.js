@@ -13,6 +13,7 @@ export default function(state = [], { type, payload } = {}) {
     case UPDATED_STUDENT :
     return state.map((student) => {
       if (student._id === payload._id) {
+        console.log(payload)
         return { ...payload }
       }
       return student

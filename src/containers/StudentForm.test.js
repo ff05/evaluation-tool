@@ -6,7 +6,7 @@ import { Group } from './Group'
 
 chai.use(chaiEnzyme())
 
-describe('<Group />', () => {
-  it('should handle things', () => {
+describe('<StudentForm />', () => {
+  it('proptypes are working', () => {
   })
 })

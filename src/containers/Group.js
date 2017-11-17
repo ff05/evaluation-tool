@@ -5,11 +5,11 @@ import { authenticate } from '../actions/authenticate'
 import { push } from 'react-router-redux'
 import PropTypes from 'prop-types'
 import Paper from 'material-ui/Paper'
-import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
+import StudentForm from './StudentForm'
 import fetchGroups from '../actions/groups/fetch'
 import fetchStudents from '../actions/students/fetch'
-import addStudent from '../actions/students/add'
+// import addStudent from '../actions/students/add'
 import { fetchOneGroup } from '../actions/groups/fetch'
 import styles from './Group.css'
 
@@ -44,6 +44,7 @@ export class Group extends PureComponent {
 
     const { groupId } = this.props.match.params
 
+    authenticate()
     fetchGroups()
     fetchOneGroup(groupId)
 
@@ -70,25 +71,6 @@ export class Group extends PureComponent {
          <div className="color" style={{background:showColor(student.days[0].eval)}}></div>
       </div>
     )
-  }
-
-  handleSubmit(event) {
-    event.preventDefault()
-
-    const { groupId } = this.props.match.params
-    const newStudent = {
-      name: this.refs.name.getValue(),
-      picture: this.refs.picture.getValue(),
-      group: groupId,
-      days:
-        {
-        "day" : "2018-10-17",
-        "eval": "green",
-        "summary": ""
-        }
-
-    }
-    this.props.addStudent(groupId, newStudent);
   }
 
   askQuestion() {
@@ -134,37 +116,26 @@ export class Group extends PureComponent {
     )
   }
 
-  renderForm() {
-    return (
-      <form onSubmit={this.handleSubmit.bind(this)} className="form">
-        <div className="input">
-          <TextField ref="name" type="text" hintText="Name" />
-        </div>
-        <div className="input">
-          <TextField ref="picture" type="text" hintText="Image source"/>
-        </div>
-        <RaisedButton
-          onClick={ this.handleSubmit.bind(this) }
-          label="Add Student"
-          primary={true} />
-      </form>
-    )
-  }
-
   render() {
-    const { students, groups } = this.props
-    if (!students) return null
-    if (!groups) return null
+    const { students, groups, group } = this.props
+    // if (!students) return null
+    if (!group) return null
+
     return (
       <div className="Group">
         <h1>Students</h1>
         <div className="upper">
-          {this.renderForm()}
-          {this.showPercentage()}
+          <StudentForm batch={group.batch}/>
+          {
+            students ? this.showPercentage() : null
+          }
         </div>
 
         <Paper className="paper">
-            {students.map(this.showStudents)}
+        {
+           students ? students.map(this.showStudents) : null
+        }
+
         </Paper>
       </div>
     )
@@ -174,12 +145,11 @@ export class Group extends PureComponent {
 
 const mapStateToProps = ({groups, students}, {match}) => {
   const group = groups.filter((g) => (g.batch == match.params.groupId))[0]
-  if (students[0] && groups[0]) return {
+  return {
     groups,
     group,
     students
   }
-  return {}
 }
 
-export default connect(mapStateToProps,{authenticate, fetchGroups, addStudent, fetchStudents, fetchOneGroup, push})(Group)
+export default connect(mapStateToProps,{authenticate, fetchGroups, fetchStudents, fetchOneGroup, push})(Group)
