@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import { authenticate } from '../actions/authenticate'
 import PropTypes from 'prop-types'
 import { fetchOneStudent } from '../actions/students/fetch'
+import updateStudent from '../actions/students/update'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -30,7 +31,9 @@ class Student extends PureComponent {
         this.state = {
           color: ""
         }
+
     }
+
   componentWillMount() {
     const { authenticate, fetchOneStudent } = this.props
 
@@ -38,6 +41,7 @@ class Student extends PureComponent {
 
     authenticate()
     fetchOneStudent(studentId)
+
   }
 
   showDays = (day, index) => {
@@ -52,13 +56,27 @@ class Student extends PureComponent {
     )
   }
 
-  submitForm() {
+  submitForm(event) {
+    event.preventDefault()
+
+    const {days} = this.props.student
+    const date = new Date(days[0].day)
+
+    const editStudent = {
+      days:
+        {
+        "day" : date,
+        "eval": this.state.color,
+        "summary": this.refs.summary.getValue()
+        }
+
+    }
+    this.props.updateStudent(this.props.student.group, this.props.student._id, editStudent);
 
   }
 
   registerColor(color) {
     this.setState({color: color})
-    console.log(this.state.color)
   }
 
   render() {
@@ -72,7 +90,6 @@ class Student extends PureComponent {
     const month= ("0" + (date.getMonth()+1)).slice(-2);
     const day = ("0" + date.getDate()).slice(-2);
     const newDate = "[" + day + "]/" + "[" + month + "]/" + "[" + year + "] "
-    console.log(newDate)
 
     return (
       <div className="Student">
@@ -100,6 +117,11 @@ class Student extends PureComponent {
                 rows = {2}
                  />
             </div>
+            <RaisedButton
+            onClick={ this.submitForm.bind(this) }
+              label= "Save"
+              primary={true}
+            />
           </form>
         </div>
         </Paper>
@@ -116,4 +138,4 @@ const mapStateToProps = ({students}, {match}) => {
   }
 }
 
-export default connect(mapStateToProps,{authenticate, fetchOneStudent})(Student)
+export default connect(mapStateToProps,{authenticate, updateStudent, fetchOneStudent})(Student)

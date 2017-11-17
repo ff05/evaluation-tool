@@ -4,11 +4,12 @@ export const UPDATED_STUDENT = 'UPDATED_STUDENT'
 
 const api = new ApiClient()
 
-export default (groupId, student) => {
+export default (groupId, studentId, student) => {
+
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(`/groups/${groupId}/students`, {...student})
+    api.patch(`/groups/${groupId}/students/${studentId}`, {...student})
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })

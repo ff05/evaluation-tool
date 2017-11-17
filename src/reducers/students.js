@@ -11,7 +11,12 @@ export default function(state = [], { type, payload } = {}) {
       return [payload, ...state]
 
     case UPDATED_STUDENT :
-      return [payload, ...state]
+    return state.map((student) => {
+      if (student._id === payload._id) {
+        return { ...payload }
+      }
+      return student
+    })
 
     case FETCHED_ONE_STUDENT :
       const studentIds = state.map(s => s._id)
