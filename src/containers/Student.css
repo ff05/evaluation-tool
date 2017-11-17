@@ -41,6 +41,15 @@
   width: 100%;
 }
 
+.Student .colors > div {
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.Student .colors > div:hover {
+  transform: scale(1.1);
+}
+
 .Student .green {
   background-color: #4CAF50;
   height: 30px;

@@ -9,7 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import StudentForm from './StudentForm'
 import fetchGroups from '../actions/groups/fetch'
 import fetchStudents from '../actions/students/fetch'
-// import addStudent from '../actions/students/add'
+import removeStudent from '../actions/students/delete'
 import { fetchOneGroup } from '../actions/groups/fetch'
 import styles from './Group.css'
 
@@ -19,7 +19,6 @@ export class Group extends PureComponent {
     fetchStudents: PropTypes.func,
     authenticate: PropTypes.func,
     push: PropTypes.func,
-    addStudent: PropTypes.func,
     fetchOneGroup: PropTypes.func,
 
     groups: PropTypes.arrayOf(PropTypes.shape({
@@ -57,6 +56,7 @@ export class Group extends PureComponent {
 
   goToStudent = (studentId) => event => this.props.push(`/students/${studentId}`)
 
+
   showStudents = (student, index) => {
     const showColor = (color) => {
       if (color === "red") return "#F44336"
@@ -64,22 +64,31 @@ export class Group extends PureComponent {
       if (color === "green") return "#4CAF50"
       else return "transparent"
     }
+
+    function removeStudent(event) {
+      event.preventDefault()
+      this.props.removeStudent(student)
+    }
+
     return (
-       <div key={index} className="student" onClick={this.goToStudent(student._id)}>
+       <div key={index} className="student-wrapper">
+       <div className="student" onClick={this.goToStudent(student._id)}>
          <h3>{student.name}</h3>
          <img className="picture" src={student.picture} alt={student.name}/>
-         <div className="color" style={{background:showColor(student.days[0].eval)}}></div>
+         <div className="color" style={{background:showColor(student.days[student.days.length - 1].eval)}}></div>
+       </div>
+       <RaisedButton label="Delete" primary={true} onClick={removeStudent.bind(this)}/>
       </div>
     )
   }
 
   askQuestion() {
     const { students } = this.props
-    const reds = students.filter(s => s.days[0].eval === "red")
-    const oranges = students.filter(s => s.days[0].eval === "orange")
-    const greens = students.filter(s => s.days[0].eval === "green")
-    const allColors1 = [reds, reds, reds, oranges, oranges, greens]
-    return [].concat(...allColors1)
+    const reds = students.filter(s => s.days[s.days.length -1].eval === "red")
+    const oranges = students.filter(s => s.days[s.days.length -1].eval === "orange")
+    const greens = students.filter(s => s.days[s.days.length -1].eval === "green")
+    const allColors = [reds, reds, reds, oranges, oranges, greens]
+    return [].concat(...allColors)
   }
 
   getRandom() {
@@ -118,7 +127,6 @@ export class Group extends PureComponent {
 
   render() {
     const { students, groups, group } = this.props
-    // if (!students) return null
     if (!group) return null
 
     return (
@@ -152,4 +160,4 @@ const mapStateToProps = ({groups, students}, {match}) => {
   }
 }
 
-export default connect(mapStateToProps,{authenticate, fetchGroups, fetchStudents, fetchOneGroup, push})(Group)
+export default connect(mapStateToProps,{authenticate, fetchGroups, fetchStudents, fetchOneGroup, removeStudent, push})(Group)

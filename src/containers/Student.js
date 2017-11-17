@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { authenticate } from '../actions/authenticate'
+import { push } from 'react-router-redux'
 import PropTypes from 'prop-types'
 import { fetchOneStudent } from '../actions/students/fetch'
 import updateStudent from '../actions/students/update'
@@ -56,22 +57,20 @@ class Student extends PureComponent {
     )
   }
 
-  submitForm(event) {
+  updateStudent(event) {
     event.preventDefault()
 
     const {days} = this.props.student
     const date = new Date(days[0].day)
 
-    const editStudent = {
-      days:
-        {
-        "day" : date,
-        "eval": this.state.color,
-        "summary": this.refs.summary.getValue()
-        }
-
-    }
-    this.props.updateStudent(this.props.student.group, this.props.student._id, editStudent);
+    const editStudent =
+      {
+      "day" : date,
+      "eval": this.state.color,
+      "summary": this.refs.summary.getValue()
+      }
+    this.props.updateStudent(this.props.student.group, this.props.student._id, editStudent)
+    // this.props.push('/students')
 
   }
 
@@ -85,12 +84,6 @@ class Student extends PureComponent {
 
     const { name, picture, group, days } = this.props.student
 
-    const date = new Date(days[0].day)
-    const year = date.getFullYear();
-    const month= ("0" + (date.getMonth()+1)).slice(-2);
-    const day = ("0" + date.getDate()).slice(-2);
-    const newDate = "[" + day + "]/" + "[" + month + "]/" + "[" + year + "] "
-
     return (
       <div className="Student">
         <Paper className="paper">
@@ -103,11 +96,18 @@ class Student extends PureComponent {
           </div>
         </div>
         <div className="lower">
-          <p>Daily evaluation for: {newDate}</p>
-          <div className="green" style={{}} onClick={this.registerColor.bind(this, "green")}> </div>
-          <div className="orange" style={{}} onClick={this.registerColor.bind(this, "orange")}></div>
-          <div className="red" style={{}} onClick={this.registerColor.bind(this, "red")}></div>
-          <form className="form" onSubmit={this.submitForm.bind(this)}>
+          <p>Daily evaluation for: </p>
+          <div className="colors">
+            <div className="green" onClick={this.registerColor.bind(this, "green")}> </div>
+            <div className="orange" onClick={this.registerColor.bind(this, "orange")}></div>
+            <div className="red" onClick={this.registerColor.bind(this, "red")}></div>
+          </div>
+          <form className="form" onSubmit={this.updateStudent.bind(this)}>
+            <div className="input">
+              <div className="input">
+                <TextField ref="date" type="date" hintText="Date"  />
+              </div>
+             </div>
             <div className="input">
               <TextField
                 ref="summary"
@@ -118,8 +118,13 @@ class Student extends PureComponent {
                  />
             </div>
             <RaisedButton
-            onClick={ this.submitForm.bind(this) }
+            onClick={ this.updateStudent.bind(this) }
               label= "Save"
+              primary={true}
+            />
+            <RaisedButton
+            onClick={ this.updateStudent.bind(this) }
+              label= "Save and Next"
               primary={true}
             />
           </form>
@@ -138,4 +143,4 @@ const mapStateToProps = ({students}, {match}) => {
   }
 }
 
-export default connect(mapStateToProps,{authenticate, updateStudent, fetchOneStudent})(Student)
+export default connect(mapStateToProps,{authenticate, push, updateStudent, fetchOneStudent})(Student)
