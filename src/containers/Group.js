@@ -83,7 +83,7 @@ export class Group extends PureComponent {
       days:
         {
         "day" : "2018-10-17",
-        "eval": "",
+        "eval": "green",
         "summary": ""
         }
 

@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import { authenticate } from '../actions/authenticate'
 import PropTypes from 'prop-types'
 import { fetchOneStudent } from '../actions/students/fetch'
+import updateStudent from '../actions/students/update'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -24,6 +25,15 @@ class Student extends PureComponent {
 
       match: PropTypes.object
     }
+
+    constructor(props) {
+      super(props)
+        this.state = {
+          color: ""
+        }
+
+    }
+
   componentWillMount() {
     const { authenticate, fetchOneStudent } = this.props
 
@@ -31,6 +41,7 @@ class Student extends PureComponent {
 
     authenticate()
     fetchOneStudent(studentId)
+
   }
 
   showDays = (day, index) => {
@@ -45,21 +56,74 @@ class Student extends PureComponent {
     )
   }
 
+  submitForm(event) {
+    event.preventDefault()
+
+    const {days} = this.props.student
+    const date = new Date(days[0].day)
+
+    const editStudent = {
+      days:
+        {
+        "day" : date,
+        "eval": this.state.color,
+        "summary": this.refs.summary.getValue()
+        }
+
+    }
+    this.props.updateStudent(this.props.student.group, this.props.student._id, editStudent);
+
+  }
+
+  registerColor(color) {
+    this.setState({color: color})
+  }
+
   render() {
     const { student } = this.props
     if (!student) return null
 
-    const { name, picture, group, days } = this.props.students[0]
+    const { name, picture, group, days } = this.props.student
+
+    const date = new Date(days[0].day)
+    const year = date.getFullYear();
+    const month= ("0" + (date.getMonth()+1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    const newDate = "[" + day + "]/" + "[" + month + "]/" + "[" + year + "] "
 
     return (
       <div className="Student">
         <Paper className="paper">
+        <div className="upper">
           <img src={picture} alt={name}/>
           <div className="heading">
             <h3>{name}</h3>
             <h4>batch #{group}</h4>
             {days.map(this.showDays)}
           </div>
+        </div>
+        <div className="lower">
+          <p>Daily evaluation for: {newDate}</p>
+          <div className="green" style={{}} onClick={this.registerColor.bind(this, "green")}> </div>
+          <div className="orange" style={{}} onClick={this.registerColor.bind(this, "orange")}></div>
+          <div className="red" style={{}} onClick={this.registerColor.bind(this, "red")}></div>
+          <form className="form" onSubmit={this.submitForm.bind(this)}>
+            <div className="input">
+              <TextField
+                ref="summary"
+                type="text"
+                hintText="Summary of today"
+                multiLine = {true}
+                rows = {2}
+                 />
+            </div>
+            <RaisedButton
+            onClick={ this.submitForm.bind(this) }
+              label= "Save"
+              primary={true}
+            />
+          </form>
+        </div>
         </Paper>
       </div>
     )
@@ -69,9 +133,9 @@ class Student extends PureComponent {
 const mapStateToProps = ({students}, {match}) => {
   const student = students.filter((s) => (s._id == match.params.studentId))[0]
   return {
-    student,
-    students
+    students,
+    student
   }
 }
 
-export default connect(mapStateToProps,{authenticate, fetchOneStudent})(Student)
+export default connect(mapStateToProps,{authenticate, updateStudent, fetchOneStudent})(Student)
