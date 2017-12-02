@@ -48,7 +48,7 @@ class Student extends PureComponent {
   showDays = (day, index) => {
     const showColor = (color) => {
       if (color === "red") return "#F44336"
-      if (color === "orange") return "#FF5722"
+      if (color === "yellow") return "#FFEB3B"
       if (color === "green") return "#4CAF50"
       else return "transparent"
     }
@@ -99,7 +99,7 @@ class Student extends PureComponent {
           <p>Daily evaluation for: </p>
           <div className="colors">
             <div className="green" onClick={this.registerColor.bind(this, "green")}> </div>
-            <div className="orange" onClick={this.registerColor.bind(this, "orange")}></div>
+            <div className="yellow" onClick={this.registerColor.bind(this, "yellow")}></div>
             <div className="red" onClick={this.registerColor.bind(this, "red")}></div>
           </div>
           <form className="form" onSubmit={this.updateStudent.bind(this)}>
@@ -120,11 +120,6 @@ class Student extends PureComponent {
             <RaisedButton
             onClick={ this.updateStudent.bind(this) }
               label= "Save"
-              primary={true}
-            />
-            <RaisedButton
-            onClick={ this.updateStudent.bind(this) }
-              label= "Save and Next"
               primary={true}
             />
           </form>

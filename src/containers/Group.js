@@ -60,7 +60,7 @@ export class Group extends PureComponent {
   showStudents = (student, index) => {
     const showColor = (color) => {
       if (color === "red") return "#F44336"
-      if (color === "orange") return "#FF5722"
+      if (color === "yellow") return "#FFEB3B"
       if (color === "green") return "#4CAF50"
       else return "transparent"
     }
@@ -85,9 +85,9 @@ export class Group extends PureComponent {
   askQuestion() {
     const { students } = this.props
     const reds = students.filter(s => s.days[s.days.length -1].eval === "red")
-    const oranges = students.filter(s => s.days[s.days.length -1].eval === "orange")
+    const yellows = students.filter(s => s.days[s.days.length -1].eval === "yellow")
     const greens = students.filter(s => s.days[s.days.length -1].eval === "green")
-    const allColors = [reds, reds, reds, oranges, oranges, greens]
+    const allColors = [reds, reds, reds, yellows, yellows, greens]
     return [].concat(...allColors)
   }
 
@@ -111,7 +111,7 @@ export class Group extends PureComponent {
       <div className="avgScore">
         <h3>Average Score: </h3>
         <div className="green" style={{width: perc("green")}}> </div>
-        <div className="orange" style={{width: perc("orange")}}></div>
+        <div className="yellow" style={{width: perc("yellow")}}></div>
         <div className="red" style={{width: perc("red")}}></div>
         <div className="lower">
           <RaisedButton
