@@ -1,6 +1,7 @@
 import { FETCHED_STUDENTS, FETCHED_ONE_STUDENT } from '../actions/students/fetch'
 import { ADD_STUDENT } from '../actions/students/add'
 import { UPDATED_STUDENT } from '../actions/students/update'
+import { STUDENT_REMOVED } from '../actions/students/delete'
 
 export default function(state = [], { type, payload } = {}) {
   switch(type) {
@@ -13,8 +14,10 @@ export default function(state = [], { type, payload } = {}) {
     case UPDATED_STUDENT :
     return state.map((student) => {
       if (student._id === payload._id) {
-        console.log(payload)
-        return { ...payload }
+        return {
+          ...student,
+          days: [...student.days, payload.days[0]]
+        }
       }
       return student
     })
@@ -30,6 +33,9 @@ export default function(state = [], { type, payload } = {}) {
         }
         return student
     })
+
+    case STUDENT_REMOVED :
+        return state.filter((game) => (game._id !== payload._id))
 
     default :
       return state

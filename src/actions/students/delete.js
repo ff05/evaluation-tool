@@ -1,24 +1,23 @@
 import ApiClient from '../../api/client'
 import { APP_LOADING, APP_DONE_LOADING, LOAD_ERROR, LOAD_SUCCESS } from '../loading'
-export const UPDATED_STUDENT = 'UPDATED_STUDENT'
+export const STUDENT_REMOVED = 'STUDENT_REMOVED'
 
 const api = new ApiClient()
 
-export default (groupId, studentId, day) => {
-
+export default (student) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    api.patch(`/groups/${groupId}/students/${studentId}`, day)
+    api.delete(`/groups/${student.group}/students/${student._id}`, {...student})
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
-      dispatch({
-        type: UPDATED_STUDENT,
-        payload: result.body
+        dispatch({
+          type: STUDENT_REMOVED,
+          payload: result.body
+        })
       })
-    })
 
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

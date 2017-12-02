@@ -7,7 +7,8 @@ import addStudent from '../actions/students/add'
 
 class StudentForm extends PureComponent {
   static propTypes = {
-    batch: PropTypes.number.isRequired
+    batch: PropTypes.number.isRequired,
+    addStudent: PropTypes.func
   }
 
   handleSubmit(event) {
@@ -20,7 +21,7 @@ class StudentForm extends PureComponent {
       group: batch,
       days:
         {
-        "day" : "2018-10-17",
+        "day" : new Date(),
         "eval": "green",
         "summary": ""
         }

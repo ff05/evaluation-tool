@@ -46,12 +46,22 @@ export class GroupList extends PureComponent {
   showGroups = (group, index) => {
     const { batch, startDate, endDate } = group
 
+    function changeDateFormat(groupDate) {
+      const date = new Date(groupDate)
+      const year = date.getFullYear()
+      const month= ("0" + (date.getMonth()+1)).slice(-2)
+      const day = ("0" + date.getDate()).slice(-2)
+      const newDate = day + " / " + month + " / "  + year
+      return newDate
+    }
+
+
     return (
 
        <li key={index} className="group" onClick={this.goToGroup(group.batch)}>
          <span>{batch}</span>
-         <span>{startDate}</span>
-         <span>{endDate}</span>
+         <span>{changeDateFormat(startDate)}</span>
+         <span>{changeDateFormat(endDate)}</span>
       </li>
     )
   }
