@@ -8,7 +8,7 @@ __Work in progress:__ days to review student evaluation of a particular date can
 <img align="left" width="46%" src="https://github.com/ff05/evaluation-tool/blob/master/src/assets/images/screenshot-student.png" alt="Artists"/>
 <br clear="left"/>
 
-To run locally, make sure:
+To __run locally__, make sure:
  * you have [Yarn](https://yarnpkg.com/en/) and [NodeJS](https://nodejs.org/en/) installed.
  * the [backend](https://github.com/ff05/evaluation-tool-api) up and running
 
